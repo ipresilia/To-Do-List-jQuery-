@@ -14,9 +14,9 @@ function updateCounters() {
   var todoCount = $(".todo").length;
   var completedCount = $(".completed").length
 
-    $("#total-count").html(todoCount);
-    $("#completed-count").html(completedCount);
-    $("#todo-count").html(todoCount - completedCount);
+  $("#total-count").html(todoCount);
+  $("#completed-count").html(completedCount);
+  $("#todo-count").html(todoCount - completedCount);
 }
 
 updateCounters();
@@ -31,40 +31,47 @@ function submitTodo(event) {
 
   $("#new-todo").val(null);
   updateCounters();
+}
 
-  function createTodo(title) {
-  var checkboxId = "todo-" + nextTodoId();
+function createTodo(title) {
+var checkboxId = "todo-" + nextTodoId();
 
-  var listItem = $("<li></li>");
-  listItem.addClass("todo");
+var listItem = $("<li></li>");
+listItem.addClass("todo");
 
-  var checkbox = $('<input>');
-  checkbox.attr('type', 'checkbox');
-  checkbox.attr('id', checkboxId);
-  checkbox.val(1);
-  checkbox.bind('change', toggleDone);
+var checkbox = $('<input>');
+checkbox.attr('type', 'checkbox');
+checkbox.attr('id', checkboxId);
+checkbox.val(1);
+checkbox.bind('change', toggleDone);
 
-  var space = document.createTextNode(" ");
+var space = document.createTextNode(" ");
 
-  var label = $('<label></label>');
-  label.attr('for', checkboxId);
-  label.html(title);
+var label = $('<label></label>');
+label.attr('for', checkboxId);
+label.html(title);
 
-  listItem.append(checkbox);
-  listItem.append(space);
-  listItem.append(label);
+listItem.append(checkbox);
+listItem.append(space);
+listItem.append(label);
 
-  $("#todolist").append( listItem );
+$("#todolist").append( listItem );
 
-  updateCounters();
+updateCounters();
 }
 
 function nextTodoId() {
-  return $(".todo").length + 1;
+return $(".todo").length + 1;
 }
-
-}
-
 
 
 $("form").bind('submit', submitTodo);
+
+
+function cleanUpDoneTodos(event) {
+  event.preventDefault();
+  $.when($(".completed").remove())
+    .then(updateCounters);
+}
+
+$("#clean-up").bind('click', cleanUpDoneTodos);
