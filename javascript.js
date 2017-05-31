@@ -1,4 +1,4 @@
-function toggle() {
+function toggleDone() {
   var checkbox = this;
 
   $(checkbox).parent().toggleClass("completed");
@@ -7,3 +7,5 @@ function toggle() {
 $(document).ready(function() {
   $("input[type=checkbox]").bind('change', toggleDone);
 });
+
+$("#total-count").html($(".todo").length);
